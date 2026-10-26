@@ -52,7 +52,9 @@ export const SearchPage: React.FC = () => {
     [bank, deferredQuery, index],
   );
 
-  useEffect(() => setLimit(PAGE_SIZE), [deferredQuery]);
+  useEffect(() => {
+    setLimit(PAGE_SIZE);
+  }, [deferredQuery]);
 
   return (
     <Page

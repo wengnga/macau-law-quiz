@@ -18,7 +18,9 @@ type LoadState = { status: 'loading' } | { status: 'error'; message: string } | 
 
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
-  useEffect(() => window.scrollTo({ top: 0 }), [pathname]);
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [pathname]);
   return null;
 };
 

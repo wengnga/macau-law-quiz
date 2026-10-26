@@ -101,6 +101,21 @@ p {
   text-align: center;
 }
 
+.error-detail {
+  max-width: 100%;
+  max-height: 40vh;
+  overflow: auto;
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--radius-small);
+  background: var(--surface-2);
+  color: var(--danger);
+  font-size: 12px;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
 /* ---------- Page layout ---------- */
 
 .page {
