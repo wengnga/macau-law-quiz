@@ -282,18 +282,6 @@ export const ANALOGY: Item[] = [
     others: ['近義', '無關', '同義'],
     explanation: '因地制宜指按實際情況靈活處理；墨守成規指死守舊規不變通，意思相反。',
   },
-  {
-    stem: '某文章的結論是「現在的樓價就是合理的樓價」。下列哪個論點最能直接支持這個結論？',
-    answer: '以現價仍有大量成交，說明市場接受這個價格',
-    others: ['填海延期導致土地供應不足', '新移民政策增加了住屋需求', '已置業的人不會抗議樓價高'],
-    explanation: '結論講的是價格「合理」。只有「現價仍有人買」直接說明市場認可這個價格；土地不足、需求增加只解釋樓價為何高，不等於合理。',
-  },
-  {
-    stem: '公職人員撰寫書信或公函時，發文人的職銜一般寫在哪個位置？',
-    answer: '下款',
-    others: ['上款', '正文', '祝頌語'],
-    explanation: '上款寫收文人稱謂，下款寫發文人署名及職銜。',
-  },
 ];
 
 export const OFFICIAL_TERMS: Item[] = [
@@ -335,6 +323,12 @@ export const OFFICIAL_TERMS: Item[] = [
   { stem: '「授益行為」是指：', answer: '給予相對人權利或利益的行為，例如發出准照、批給資助', others: ['對相對人作出處罰', '只限確認行為', '只限內部行為'], explanation: '' },
   { stem: '「負擔行為」是指：', answer: '課予相對人義務或限制其權利的行為', others: ['給予相對人利益的行為', '只限罰款', '只限徵收'], explanation: '' },
   { stem: '影響私人權益的行政行為，一般須：', answer: '說明理由', others: ['無須說明理由', '只在書面作出時說明', '只有處罰行為才說明'], explanation: '說明理由讓當事人知道決定依據，以便決定是否申訴。' },
+  {
+    stem: '公職人員撰寫書信或公函時，發文人的職銜一般寫在哪個位置？',
+    answer: '下款',
+    others: ['上款', '正文', '祝頌語'],
+    explanation: '上款寫收文人稱謂，下款寫發文人署名及職銜。',
+  },
 ];
 
 export const IDIOMS: Item[] = [
@@ -356,43 +350,4 @@ export const IDIOMS: Item[] = [
   { stem: '「避重就輕」的意思是：', answer: '迴避重要的，只談次要的', others: ['直面重點', '先難後易', '輕重並重'], explanation: '' },
   { stem: '「開門見山」的意思是：', answer: '說話寫文章直入主題', others: ['迂迴曲折', '先講背景', '只描寫風景'], explanation: '' },
   { stem: '「循序漸進」的意思是：', answer: '按次序逐步推進', others: ['一步登天', '雜亂無章', '倒退回原點'], explanation: '' },
-];
-
-export const OFFICE: Item[] = [
-  { stem: 'Excel 中要讓儲存格參照的欄和列在複製公式時都不改變，應寫成：', answer: '$A$1', others: ['A1', 'A$1', '$A1'], explanation: '$ 鎖定緊隨其後的欄或列；$A$1 欄列都鎖定。' },
-  { stem: 'Excel 中 $A1 表示：', answer: '欄 A 固定、列可變', others: ['欄可變、列 1 固定', '欄與列都固定', '錯誤寫法'], explanation: '$ 放在 A 前，只鎖定欄。' },
-  { stem: 'Excel 中要讓公式複製時「列」不變、欄可變，應寫成：', answer: 'A$1', others: ['$A1', 'A1', '$A$1'], explanation: '' },
-  { stem: 'Excel 的 B2 儲存格公式為 =A1*A2，複製到 C3 後，C3 的公式是：', answer: '=B2*B3', others: ['=A1*A2', '=C2*C3', '=A2*A3'], explanation: '由 B2 到 C3 是右移 1 欄、下移 1 列，相對參照同樣各移 1：A1→B2，A2→B3。' },
-  { stem: 'Excel 的 B1 公式為 =A1+A2，複製到 C2 後，C2 的公式是：', answer: '=B2+B3', others: ['=A1+A2', '=A2+A3', '=B1+B2'], explanation: '右移 1 欄、下移 1 列。' },
-  { stem: 'Excel 的 C1 公式為 =A1*B1，複製到 D2 後，D2 的公式是：', answer: '=B2*C2', others: ['=A1*B1', '=A2*B2', '=C1*D1'], explanation: '' },
-  { stem: 'Excel 的 B2 公式為 =$A2*2，複製到 C3 後，C3 的公式是：', answer: '=$A3*2', others: ['=$A2*2', '=$B3*2', '=A3*2'], explanation: '欄 A 被鎖定不變，列是相對參照，由 2 變 3。' },
-  { stem: 'Excel 的 B2 公式為 =$A$1+1，複製到 C4 後，C4 的公式是：', answer: '=$A$1+1', others: ['=$B$3+1', '=A1+1', '=B3+1'], explanation: '絕對參照不隨複製改變。' },
-  { stem: 'Excel 中計算 A1 到 A10 總和的公式是：', answer: '=SUM(A1:A10)', others: ['=TOTAL(A1:A10)', '=ADD(A1:A10)', '=A1+A10'], explanation: '' },
-  { stem: 'Excel 中 =SUM(A1,A3,A5) 計算的是：', answer: 'A1、A3、A5 三格的總和', others: ['A1 到 A5 的總和', '三格的平均數', '三格中數值的個數'], explanation: '逗號分隔的是個別儲存格，冒號才表示範圍。' },
-  { stem: 'Excel 中 A1:A5 依次為 10、20、30、40、50，=AVERAGE(A1:A5) 的結果是：', answer: '30', others: ['35', '150', '25'], explanation: '150 ÷ 5 = 30。' },
-  { stem: 'Excel 中 =COUNT(A1:A10) 計算的是：', answer: '範圍內含數值的儲存格個數', others: ['範圍內數值的總和', '平均數', '最大值'], explanation: '' },
-  { stem: 'Excel 中 =COUNTIF(A1:A10,">50") 計算的是：', answer: '範圍內大於 50 的儲存格個數', others: ['大於 50 的數值總和', '平均數', '最大值'], explanation: '' },
-  { stem: 'Excel 中 =IF(A1>60,"及格","不及格")，若 A1 = 70，結果是：', answer: '及格', others: ['不及格', '70', '錯誤'], explanation: '' },
-  { stem: 'Excel 中 =ROUND(3.14159,2) 的結果是：', answer: '3.14', others: ['3', '3.141', '3.1'], explanation: '第二個參數 2 表示保留兩位小數。' },
-  { stem: 'Excel 中 =ROUND(2.5,0) 的結果是：', answer: '3', others: ['2', '2.5', '0'], explanation: 'Excel 的 ROUND 採用一般四捨五入，2.5 進位為 3。' },
-  { stem: 'Excel 儲存格顯示 #DIV/0! 表示：', answer: '公式中除數為零', others: ['參照錯誤', '數值溢位', '格式錯誤'], explanation: '' },
-  { stem: 'Excel 儲存格顯示 ##### 最可能表示：', answer: '欄寬不足以顯示內容', others: ['除數為零', '參照錯誤', '公式錯誤'], explanation: '' },
-  { stem: 'Excel 中 A1:A10 屬於：', answer: '範圍參照', others: ['單一儲存格參照', '絕對參照', '公式運算'], explanation: '' },
-  { stem: 'Excel 儲存格輸入 0.5 後顯示為 50%，表示：', answer: '儲存格格式設為百分比', others: ['格式錯誤', '公式錯誤', '參照錯誤'], explanation: '' },
-  { stem: '下列哪種格式的影片可以直接插入 PowerPoint 投影片？', answer: 'WMV', others: ['MP3', 'WMA', 'MID'], explanation: 'MP3、WMA、MID 都是音訊格式。' },
-  { stem: 'PowerPoint 放映時按 B 鍵會：', answer: '畫面變黑（再按一次恢復）', others: ['跳到下一張', '回到上一張', '結束放映'], explanation: 'B 為 Black，W 為 White（白屏）。' },
-  { stem: 'PowerPoint 中從「目前投影片」開始放映的快速鍵是：', answer: 'Shift + F5', others: ['F5', 'Ctrl + F5', 'Alt + F5'], explanation: 'F5 是從頭開始放映。' },
-  { stem: 'PowerPoint「投影片母片」的用途是：', answer: '統一設定所有投影片的版面與樣式', others: ['設定單張投影片動畫', '插入影片', '設定轉場效果'], explanation: '' },
-  { stem: 'PowerPoint 中「動畫」與「轉場」的區別是：', answer: '動畫作用於投影片上的物件，轉場作用於投影片之間的切換', others: ['兩者相同', '只有轉場可以設定', '只有動畫可以設定'], explanation: '' },
-  { stem: 'PowerPoint「備忘稿」的用途是：', answer: '供講者參考，觀眾在放映畫面上看不到', others: ['投影片上的正文', '投影片標題', '動畫設定'], explanation: '' },
-  { stem: 'PowerPoint 的投影片編號可以從哪裏插入？', answer: '插入 → 頁首及頁尾', others: ['設計 → 佈景主題', '動畫', '轉場'], explanation: '' },
-  { stem: 'Word 郵件合併「選取收件者」時，下列哪項不是內建選項？', answer: '從網絡郵件聯絡人選擇', others: ['鍵入新清單', '使用現有清單', '從 Outlook 連絡人選擇'], explanation: '內建三項：鍵入新清單、使用現有清單、從 Outlook 連絡人選擇。' },
-  { stem: 'Word 合併列印中「插入合併欄位」的用途是：', answer: '插入資料來源中的欄位（如姓名、地址）', others: ['插入固定文字', '插入圖片', '插入表格'], explanation: '' },
-  { stem: '下列哪種檔案最適合作為 Word 合併列印的資料來源？', answer: 'Excel 活頁簿', others: ['PDF', '圖片', '影片'], explanation: '' },
-  { stem: 'Word 自動產生的「目錄」通常依據：', answer: '文件中套用的標題樣式', others: ['手動輸入的文字', '字型大小', '粗體文字'], explanation: '' },
-  { stem: '更新 Word 目錄時，可以選擇：', answer: '只更新頁碼或更新整個目錄', others: ['只能更新頁碼', '只能更新整個目錄', '目錄無法更新'], explanation: '' },
-  { stem: 'Word 表格跨頁時要讓每頁都顯示同一標題列，應使用：', answer: '重複標題列', others: ['分節符號', '頁首', '書籤'], explanation: '' },
-  { stem: 'Word 表格中要把幾個儲存格合成一個，應使用：', answer: '合併儲存格', others: ['分割儲存格', '插入列', '刪除欄'], explanation: '' },
-  { stem: 'Word 的「追蹤修訂」功能位於哪個索引標籤？', answer: '校閱', others: ['插入', '檢視', '設計'], explanation: '' },
-  { stem: 'Word 的「分欄」功能位於哪個索引標籤？', answer: '版面配置', others: ['插入', '參考資料', '校閱'], explanation: '' },
 ];

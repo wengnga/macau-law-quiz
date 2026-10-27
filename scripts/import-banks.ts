@@ -14,7 +14,11 @@ const outDir = join(root, 'public', 'banks');
 type BankSource = { file: string; importer: (content: string, version: string) => Bank } | { build: () => Bank };
 
 /** Add a new entry here to ship another question bank. */
-const SOURCES: BankSource[] = [{ file: 'data/macau-law.md', importer: parseMacauLawMd }, { build: buildMathBank }, { build: buildAptitudeBank }];
+const SOURCES: BankSource[] = [
+  { build: buildAptitudeBank },
+  { build: buildMathBank },
+  { file: 'data/macau-law.md', importer: parseMacauLawMd },
+];
 
 function loadBank(source: BankSource): Bank {
   if ('build' in source) return source.build();

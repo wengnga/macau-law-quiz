@@ -2,13 +2,17 @@ import { createHash } from 'node:crypto';
 import type { Bank, Question, Section } from '../../src/domain/types';
 import * as gen from './generators';
 import { collect, type Draft, type Generated, type Rng } from './kit';
+import { definedOperation } from './operations';
 import { PAST_QUESTIONS } from './past';
+import { budgetPie, overtimeBars, visitorsLine } from './visual';
 
 export const MATH_BANK_ID = 'macau-math';
 
 type Recipe = [make: (rng: Rng) => Generated | null, count: number];
 
 interface SectionSpec {
+  /** Fixed so saved progress survives reordering; the list below is in display order. */
+  id: string;
   title: string;
   shortTitle: string;
   drafts: () => Draft[];
@@ -20,8 +24,9 @@ function fromRecipes(seedBase: number, recipes: Recipe[]): () => Draft[] {
 }
 
 const SECTIONS: SectionSpec[] = [
-  { title: '歷屆真題（回憶版）', shortTitle: '歷屆真題', drafts: () => PAST_QUESTIONS },
+  { id: 's1', title: '歷屆真題（回憶版）', shortTitle: '歷屆真題', drafts: () => PAST_QUESTIONS },
   {
+    id: 's2',
     title: '工程與合作問題',
     shortTitle: '工程與合作',
     drafts: fromRecipes(2, [
@@ -31,6 +36,7 @@ const SECTIONS: SectionSpec[] = [
     ]),
   },
   {
+    id: 's3',
     title: '行程問題（追及、相遇、過隧道、平均速度）',
     shortTitle: '行程問題',
     drafts: fromRecipes(3, [
@@ -41,6 +47,7 @@ const SECTIONS: SectionSpec[] = [
     ]),
   },
   {
+    id: 's4',
     title: '百分比與比例（增長率、基準值陷阱、利潤）',
     shortTitle: '百分比與比例',
     drafts: fromRecipes(4, [
@@ -52,6 +59,7 @@ const SECTIONS: SectionSpec[] = [
     ]),
   },
   {
+    id: 's5',
     title: '機率與排列組合',
     shortTitle: '機率與排列組合',
     drafts: fromRecipes(5, [
@@ -62,6 +70,7 @@ const SECTIONS: SectionSpec[] = [
     ]),
   },
   {
+    id: 's6',
     title: '平均數與中位數',
     shortTitle: '平均數與中位數',
     drafts: fromRecipes(6, [
@@ -70,8 +79,19 @@ const SECTIONS: SectionSpec[] = [
       [gen.weightedMean, 8],
     ]),
   },
-  { title: '數列規律', shortTitle: '數列規律', drafts: fromRecipes(7, [[gen.sequence, 30]]) },
-  { title: '圖表數據分析', shortTitle: '圖表數據', drafts: fromRecipes(8, [[gen.chart, 30]]) },
+  { id: 's7', title: '數列規律', shortTitle: '數列規律', drafts: fromRecipes(7, [[gen.sequence, 30]]) },
+  { id: 's10', title: '定義運算（從例子找出規律）', shortTitle: '定義運算', drafts: fromRecipes(10, [[definedOperation, 24]]) },
+  { id: 's8', title: '圖表數據分析（表格）', shortTitle: '圖表數據（表格）', drafts: fromRecipes(8, [[gen.chart, 30]]) },
+  {
+    id: 's9',
+    title: '圖表數據分析（看圖：柱狀圖、折線圖、圓餅圖）',
+    shortTitle: '圖表數據（看圖）',
+    drafts: fromRecipes(9, [
+      [overtimeBars, 12],
+      [visitorsLine, 9],
+      [budgetPie, 9],
+    ]),
+  },
 ];
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -96,7 +116,7 @@ export function buildMathBank(): Bank {
   const sections: Section[] = [];
   const questions: Question[] = [];
   SECTIONS.forEach((spec, index) => {
-    const sectionId = `s${index + 1}`;
+    const sectionId = spec.id;
     const drafts = spec.drafts();
     drafts.forEach((draft, i) => questions.push(toQuestion(draft, sectionId, i + 1)));
     sections.push({ id: sectionId, title: spec.title, shortTitle: spec.shortTitle, order: index + 1, questionCount: drafts.length });
@@ -105,7 +125,7 @@ export function buildMathBank(): Bank {
   return {
     schemaVersion: 1,
     id: MATH_BANK_ID,
-    title: '數學運算與數據分析（430 綜合能力評估）',
+    title: '數理邏輯及圖表數據分析（綜合能力評估）',
     description: '歷屆真題回憶版（已改寫並附解析）及按考點自動生成的練習題，答案均由程式計算。',
     version,
     contentFormat: 'markdown',
