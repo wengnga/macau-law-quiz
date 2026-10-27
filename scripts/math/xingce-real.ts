@@ -251,7 +251,7 @@ const DATA: Draft[] = [
     stem: `${VISITORS}\n\n關於上一年各類旅客佔總數的比重，下列哪項正確？`,
     options: ['內地旅客的比重低於 69.7%', '香港旅客的比重高於 20.0%', '台灣旅客的比重高於 3.5%', '國際旅客的比重低於 6.8%'],
     answer: 1,
-    explanation: '先算出今年比重：內地 69.7%、香港 20.0%、台灣 3.5%、國際 6.8%。部分增長率低於整體的，今年比重下降，即上年比重較高：香港 9.0% < 10.7%，所以上年比重高於 20.0%，B 正確。同理內地、國際的上年比重也較高，A、D 錯；台灣增長較快，上年比重較低，C 錯。',
+    explanation: '先算出今年比重：內地 69.7%、香港 20.0%、台灣 3.5%、國際 6.8%。部分增長率低於整體的，今年比重下降，即上年比重較高：香港 9.0% < 10.7%，所以上年比重高於 20.0%，{2} 正確。同理內地、國際的上年比重也較高，{1}、{4} 錯；台灣增長較快，上年比重較低，{3} 錯。',
   },
   {
     stem: '某年本澳本地生產總值 4,000 億元，比上年增長 5.2%；其中第三產業 3,500 億元，增長 5.8%。\n\n第三產業佔本地生產總值的比重比上年：',
@@ -323,7 +323,10 @@ const DATA: Draft[] = [
 
 const CATCH_ALL = /^無法/;
 
-/** Options are written in natural order above; shuffle them (keeping「無法…」last) so the answer position carries no hint. */
+/**
+ * Options are written in natural order above; shuffle them (keeping「無法…」last) so the answer position carries no hint.
+ * Explanations refer to options as `{n}` (n-th option as written), resolved here to the shown letter.
+ */
 function shuffleOptions(drafts: Draft[], seed: number): Draft[] {
   const rng = createRng(seed);
   return drafts.map((draft) => {
@@ -335,7 +338,12 @@ function shuffleOptions(drafts: Draft[], seed: number): Draft[] {
       [free[i], free[j]] = [free[j] as string, free[i] as string];
     }
     const options = [...free, ...pinned];
-    return { ...draft, options, answer: options.indexOf(correct ?? '') };
+    const explanation = draft.explanation.replace(/\{(\d)\}/g, (_, n: string) => {
+      const index = options.indexOf(draft.options[Number(n) - 1] ?? '');
+      if (index < 0) throw new Error(`解析引用了不存在的選項 {${n}}：${draft.stem}`);
+      return 'ABCD'.charAt(index);
+    });
+    return { ...draft, options, answer: options.indexOf(correct ?? ''), explanation };
   });
 }
 

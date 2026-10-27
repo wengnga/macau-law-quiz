@@ -6,6 +6,7 @@ export interface Item {
   others: string[];
   /** Option pinned to the end, e.g.「以上皆是」; may itself be the answer. */
   last?: string;
+  /** Refer to options as `{1}` (the answer), `{2}`… (`others` in order, then `last`); never by letter, since options are shuffled. */
   explanation: string;
 }
 

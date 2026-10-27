@@ -30,6 +30,20 @@ function shuffled<T>(items: T[], rng: Rng): T[] {
   return copy;
 }
 
+/** Option list in authoring order; `{n}` in an explanation refers to its n-th entry (1-based). */
+function authoredOptions(item: Item): string[] {
+  return [item.answer, ...item.others, ...(item.last && item.last !== item.answer ? [item.last] : [])];
+}
+
+/** Replaces `{n}` placeholders with the letter the option ends up under after shuffling. */
+export function resolveOptionRefs(explanation: string, authored: string[], shown: string[]): string {
+  return explanation.replace(/\{(\d)\}/g, (_, n: string) => {
+    const key = KEYS[shown.indexOf(authored[Number(n) - 1] ?? '')];
+    if (!key) throw new Error(`解析引用了不存在的選項 {${n}}：${explanation}`);
+    return key;
+  });
+}
+
 /** Shuffles so the answer position carries no hint; a pinned `last` option (以上皆是…) stays last. */
 function toOptions(item: Item, rng: Rng): string[] {
   const free = item.answer === item.last ? item.others : [item.answer, ...item.others];
@@ -64,7 +78,7 @@ export function buildAptitudeBank(): Bank {
         stem: item.stem,
         options: options.map((content, k) => ({ key: KEYS[k] ?? String(k), content })),
         answer: [answerKey],
-        ...(item.explanation ? { explanation: item.explanation } : {}),
+        ...(item.explanation ? { explanation: resolveOptionRefs(item.explanation, authoredOptions(item), options) } : {}),
       });
     });
     sections.push({ id: sectionId, title: spec.title, shortTitle: spec.shortTitle, order: index + 1, questionCount: spec.items.length });

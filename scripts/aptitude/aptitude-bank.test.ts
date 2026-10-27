@@ -32,6 +32,21 @@ describe('aptitude bank', () => {
     expect(new Set(stems).size).toBe(stems.length);
   });
 
+  it('explanations refer to options by placeholder, never by a hard-coded letter', () => {
+    const items = [...LOGIC, ...ANALOGY, ...READING, ...ARGUMENTS, ...LOGIC_XINGCE, ...ANALOGY_XINGCE, ...ARGUMENTS_XINGCE, ...READING_XINGCE];
+    for (const item of items) {
+      const letters = item.explanation.match(/(?<![A-Za-z0-9])[A-D](?![A-Za-z0-9])/g) ?? [];
+      letters.forEach((letter) => expect(item.stem.includes(letter), `${item.stem.slice(0, 30)} → ${letter}`).toBe(true));
+    }
+    for (const q of bank.questions) expect(q.explanation ?? '', q.stem).not.toMatch(/\{\d\}/);
+  });
+
+  it('placeholders resolve to the shown letter of the intended option', () => {
+    const q = bank.questions.find((item) => item.stem.startsWith('大三巴牌坊'));
+    const letterOf = (text: string) => q?.options.find((o) => o.content === text)?.key;
+    expect(q?.explanation).toContain(`${letterOf('記載澳門歷史的史書厚重難讀')} 只是附帶的比較`);
+  });
+
   it('question ids are unique', () => {
     expect(new Set(bank.questions.map((q) => q.id)).size).toBe(bank.questions.length);
   });
