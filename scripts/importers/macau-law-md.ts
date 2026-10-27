@@ -187,6 +187,7 @@ export function parseMacauLawMd(md: string, version: string): Bank {
     description: doc.title,
     version,
     contentFormat: 'text',
+    explanationLabel: '条文依据',
     sections,
     questions,
   };

@@ -83,7 +83,7 @@ export const SearchPage: React.FC = () => {
         className="input"
         type="search"
         autoFocus
-        placeholder="搜题干、选项、条文，如：立法会 三分之二"
+        placeholder="搜题干、选项、解析，如：立法会 三分之二"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       />

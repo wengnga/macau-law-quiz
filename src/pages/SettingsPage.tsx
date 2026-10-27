@@ -22,7 +22,7 @@ async function exportProgress(): Promise<void> {
   const now = Date.now();
   const date = new Date(now);
   const stamp = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
-  const file = new File([serializeExport(getAppData(), now)], `法例刷题进度-${stamp}.json`, { type: 'application/json' });
+  const file = new File([serializeExport(getAppData(), now)], `刷题进度-${stamp}.json`, { type: 'application/json' });
   // On phones the share sheet ("save to Files", AirDrop, WeChat...) is more reliable than a download.
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
   if (isTouch && navigator.canShare?.({ files: [file] })) {

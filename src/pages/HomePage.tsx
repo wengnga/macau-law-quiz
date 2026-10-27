@@ -29,6 +29,10 @@ export const HomePage: React.FC = () => {
       summary: summarize((questionsBySection.get(section.id) ?? []).map((question) => question.id), data.stats, now),
     }));
   }, [bank, questionsBySection, data.stats]);
+  const hasArticles = useMemo(
+    () => bank.questions.some((question) => question.tags?.some((tag) => tag.startsWith('article:'))),
+    [bank],
+  );
   const starredCount = useMemo(
     () => bank.questions.filter((question) => data.stats[question.id]?.starred).length,
     [bank, data.stats],
@@ -43,7 +47,7 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <Page title="法例刷题">
+    <Page title="澳门刷题">
       {banks.length > 1 ? (
         <select className="select bank-select" value={bank.id} onChange={(event) => setBankId(event.target.value)}>
           {banks.map((entry) => (
@@ -117,10 +121,12 @@ export const HomePage: React.FC = () => {
           <span className="entry-title">收藏</span>
           <span className="entry-desc">{starredCount} 题</span>
         </Link>
-        <Link className="entry" to="/articles">
-          <span className="entry-title">按条文练</span>
-          <span className="entry-desc">同一条文集中攻克</span>
-        </Link>
+        {hasArticles ? (
+          <Link className="entry" to="/articles">
+            <span className="entry-title">按条文练</span>
+            <span className="entry-desc">同一条文集中攻克</span>
+          </Link>
+        ) : null}
         <Link className="entry" to="/search">
           <span className="entry-title">搜索</span>
           <span className="entry-desc">简繁体都能搜</span>

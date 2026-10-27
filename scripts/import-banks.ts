@@ -4,25 +4,29 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Bank, BankIndexEntry } from '../src/domain/types';
 import { parseMacauLawMd } from './importers/macau-law-md';
+import { buildMathBank } from './math/build';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = join(root, 'public', 'banks');
 
-interface BankSource {
-  file: string;
-  importer: (content: string, version: string) => Bank;
-}
+/** A bank parsed from a data file, or one built in code (which sets its own version). */
+type BankSource = { file: string; importer: (content: string, version: string) => Bank } | { build: () => Bank };
 
-/** Add a new entry (and importer) here to ship another question bank. */
-const SOURCES: BankSource[] = [{ file: 'data/macau-law.md', importer: parseMacauLawMd }];
+/** Add a new entry here to ship another question bank. */
+const SOURCES: BankSource[] = [{ file: 'data/macau-law.md', importer: parseMacauLawMd }, { build: buildMathBank }];
+
+function loadBank(source: BankSource): Bank {
+  if ('build' in source) return source.build();
+  const content = readFileSync(join(root, source.file), 'utf8');
+  const version = createHash('sha1').update(content).digest('hex').slice(0, 10);
+  return source.importer(content, version);
+}
 
 function main(): void {
   mkdirSync(outDir, { recursive: true });
   const index: BankIndexEntry[] = [];
   for (const source of SOURCES) {
-    const content = readFileSync(join(root, source.file), 'utf8');
-    const version = createHash('sha1').update(content).digest('hex').slice(0, 10);
-    const bank = source.importer(content, version);
+    const bank = loadBank(source);
     const file = `${bank.id}.json`;
     writeFileSync(join(outDir, file), JSON.stringify(bank));
     index.push({ id: bank.id, title: bank.title, questionCount: bank.questions.length, file });

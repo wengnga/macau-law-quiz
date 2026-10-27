@@ -45,6 +45,8 @@ export interface Bank {
   description?: string;
   version: string;
   contentFormat: ContentFormat;
+  /** Heading shown above `Question.explanation`; defaults to「解析」. */
+  explanationLabel?: string;
   sections: Section[];
   questions: Question[];
   materials?: Material[];

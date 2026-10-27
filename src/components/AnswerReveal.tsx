@@ -32,7 +32,7 @@ export const AnswerReveal: React.FC<AnswerRevealProps> = ({ question, userAnswer
       )}
       {question.explanation ? (
         <div className="reveal-basis">
-          <div className="reveal-label">条文依据</div>
+          <div className="reveal-label">{bank.explanationLabel ?? '解析'}</div>
           <RichText content={question.explanation} format={bank.contentFormat} />
         </div>
       ) : null}

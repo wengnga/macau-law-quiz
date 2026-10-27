@@ -16,7 +16,7 @@ const MODE_OPTIONS: SegmentedOption<SessionMode>[] = [
   { value: 'exam', label: '模拟考试' },
 ];
 const MODE_HINTS: Record<SessionMode, string> = {
-  practice: '每答一题立即显示对错和条文依据，答错自动进错题本。',
+  practice: '每答一题立即显示对错和解析，答错自动进错题本。',
   memorize: '直接显示答案和依据，适合考前快速过一遍，不计入统计。',
   exam: '限时作答，可以改答案，交卷后才显示成绩，结果计入统计。',
 };
