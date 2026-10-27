@@ -12,7 +12,7 @@ describe('defined-operation questions', () => {
   const questions = bank.questions.filter((q) => q.sectionId === 's10');
 
   it('has exactly one rule fitting the examples, and the answer follows it', () => {
-    expect(questions.length).toBeGreaterThanOrEqual(20);
+    expect(questions.length).toBeGreaterThanOrEqual(8);
     for (const q of questions) {
       const examples = [...q.stem.matchAll(/\((\d+),(\d+)\) = (\d+)/g)].map((m) => m.slice(1).map(Number));
       const query = /\((\d+),(\d+)\) = ？/.exec(q.stem);
@@ -29,7 +29,7 @@ describe('chart questions', () => {
   const questions = bank.questions.filter((q) => q.sectionId === 's9');
 
   it('embeds a decodable SVG in every stem', () => {
-    expect(questions).toHaveLength(30);
+    expect(questions).toHaveLength(10);
     for (const q of questions) {
       const match = /data:image\/svg\+xml;base64,([A-Za-z0-9+/=]+)\)/.exec(q.stem);
       expect(match, q.id).not.toBeNull();

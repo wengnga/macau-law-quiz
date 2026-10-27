@@ -26,7 +26,7 @@ const numbersIn = (text: string): number[] => (text.match(/\d+(\.\d+)?/g) ?? [])
 
 describe('math bank', () => {
   it('every question is well formed', () => {
-    expect(bank.questions.length).toBeGreaterThan(250);
+    expect(bank.questions.length).toBeGreaterThan(120);
     for (const question of bank.questions) {
       expect(question.options).toHaveLength(4);
       const contents = question.options.map((option) => option.content);

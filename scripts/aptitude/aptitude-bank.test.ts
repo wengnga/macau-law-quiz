@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { buildAptitudeBank } from './build';
 import { ARGUMENTS } from './arguments';
-import { ANALOGY, IDIOMS, LOGIC, OFFICIAL_TERMS } from './questions';
+import { ANALOGY, LOGIC } from './questions';
 import { READING } from './reading';
+import { ANALOGY_XINGCE, ARGUMENTS_XINGCE, LOGIC_XINGCE, READING_XINGCE } from './xingce';
 
 const PINNED = /以上皆|以上都|無法判斷|無法確定/;
 
@@ -27,8 +28,12 @@ describe('aptitude bank', () => {
   });
 
   it('no duplicated stems', () => {
-    const stems = [...LOGIC, ...ANALOGY, ...OFFICIAL_TERMS, ...IDIOMS, ...READING, ...ARGUMENTS].map((i) => i.stem);
+    const stems = [...LOGIC, ...ANALOGY, ...READING, ...ARGUMENTS, ...LOGIC_XINGCE, ...ANALOGY_XINGCE, ...ARGUMENTS_XINGCE, ...READING_XINGCE].map((i) => i.stem);
     expect(new Set(stems).size).toBe(stems.length);
+  });
+
+  it('question ids are unique', () => {
+    expect(new Set(bank.questions.map((q) => q.id)).size).toBe(bank.questions.length);
   });
 
   it('section counts match and version is deterministic', () => {
