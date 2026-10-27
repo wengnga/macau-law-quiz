@@ -4,6 +4,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Bank, BankIndexEntry } from '../src/domain/types';
 import { parseMacauLawMd } from './importers/macau-law-md';
+import { buildAptitudeBank } from './aptitude/build';
 import { buildMathBank } from './math/build';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -13,7 +14,7 @@ const outDir = join(root, 'public', 'banks');
 type BankSource = { file: string; importer: (content: string, version: string) => Bank } | { build: () => Bank };
 
 /** Add a new entry here to ship another question bank. */
-const SOURCES: BankSource[] = [{ file: 'data/macau-law.md', importer: parseMacauLawMd }, { build: buildMathBank }];
+const SOURCES: BankSource[] = [{ file: 'data/macau-law.md', importer: parseMacauLawMd }, { build: buildMathBank }, { build: buildAptitudeBank }];
 
 function loadBank(source: BankSource): Bank {
   if ('build' in source) return source.build();
